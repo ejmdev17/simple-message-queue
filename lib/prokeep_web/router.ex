@@ -5,8 +5,10 @@ defmodule ProkeepWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/api", ProkeepWeb do
+  scope "/", ProkeepWeb do
     pipe_through :api
+
+    get "/receive-message", MessageController, :receive_message
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
