@@ -8,6 +8,9 @@ defmodule Prokeep.Application do
   @impl true
   def start(_type, _args) do
     children = [
+      {DynamicSupervisor, strategy: :one_for_one, name: Prokeep.QueueSupervisor},
+
+      # Phoenix Default Children
       ProkeepWeb.Telemetry,
       {DNSCluster, query: Application.get_env(:prokeep, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Prokeep.PubSub},

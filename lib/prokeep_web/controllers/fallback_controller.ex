@@ -15,7 +15,7 @@ defmodule ProkeepWeb.FallbackController do
     |> render(:"404")
   end
 
-  def call(conn, error) do
+  def call(_conn, error) do
     Logger.error("Unhandled error in FallbackController: #{inspect(error)}")
   end
 end

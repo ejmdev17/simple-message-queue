@@ -1,6 +1,7 @@
 defmodule ProkeepWeb.MessageControllerTest do
   use ProkeepWeb.ConnCase
   import ExUnit.CaptureLog
+  alias Prokeep.Queue
 
   setup do
     {:ok, conn: put_req_header(build_conn(), "accept", "application/json")}
@@ -19,6 +20,8 @@ defmodule ProkeepWeb.MessageControllerTest do
 
       # Then
       assert json_response(conn, 200) == %{"message" => "test message"}
+      assert {:ok, queue} = Queue.get_or_create_queue("q1")
+      assert Queue.dequeue(queue) == {:ok, "test message"}
     end
 
     @tag capture_log: true
